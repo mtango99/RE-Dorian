@@ -25,6 +25,9 @@ library(here)
 #token refers to the twitter token you defined above for access to your twitter developer account
 #geocode is equal to a string with three parts: longitude, latidude, and distance with the units mi for miles or km for kilometers
 
+install.packages("RPostgres")
+load("C:/Users/jofia/github/RE-Dorian/data/derived/private/dorian.RData")
+
 #set up twitter API information
 #this should launch a web browser and ask you to log in to twitter
 #replace app, consumer_key, and consumer_secret data with your own developer acct info
@@ -60,6 +63,9 @@ load(here("data","derived","private","dorian.RData"))
 #reference for lat_lng function: https://rtweet.info/reference/lat_lng.html
 #adds a lat and long field to the data frame, picked out of the fields you indicate in the c() list
 #sample function: lat_lng(x, coords = c("coords_coords", "bbox_coords"))
+install.packages("tidyverse")
+load("tidyverse")
+
 
 # list unique/distinct place types to check if you got them all
 unique(dorian$place_type)
