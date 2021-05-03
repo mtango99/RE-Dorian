@@ -129,7 +129,7 @@ counties <- get_estimates("county",
                           output="wide",
                           geometry=TRUE, keep_geo_vars=TRUE, 
                           key="yourkey")
-
+ 
 # select only the states you want, with FIPS state codes
 # look up fips codes here:
 # https://en.wikipedia.org/wiki/Federal_Information_Processing_Standard_state_code 
@@ -167,6 +167,7 @@ ggplot() +
 #Connectign to Postgres
 #Create a con database connection with the dbConnect function.
 #Change the user and password to your own!
+<<<<<<< HEAD:procedure/code/02-analyze-dorianLAB.r
 con <- dbConnect(RPostgres::Postgres(), dbname='dsm', host='artemis', user='', password='') 
 =======
 # Connecting to Postgres
@@ -178,6 +179,9 @@ con <- dbConnect(RPostgres::Postgres(),
                  user='user', 
                  password='password') 
 >>>>>>> upstream/main
+=======
+con <- dbConnect(RPostgres::Postgres(), dbname='dsm', host='artemis', user='maddie', password='mtango99') 
+>>>>>>> parent of 7c317ba (Update 02-analyze-dorian.r):procedure/code/02-analyze-dorian.r
 
 #list the database tables, to check if the database is working
 dbListTables(con) 
