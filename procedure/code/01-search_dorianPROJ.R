@@ -27,15 +27,15 @@ library(rehydratoR)
 #geocode is equal to a string with three parts: longitude, latidude, and distance with the units mi for miles or km for kilometers
 
 install.packages("RPostgres")
-load("C:/Users/jofia/github/RE-Dorian/data/derived/private/dorian.RData")
+#load("C:/Users/jofia/github/RE-Dorian/data/derived/private/dorian.RData")
 
 #set up twitter API information
 #this should launch a web browser and ask you to log in to twitter
 #replace app, consumer_key, and consumer_secret data with your own developer acct info
 twitter_token <- create_token(
-  app = "yourapp",  					#replace yourapp with your app name
-  consumer_key = "yourkey",  		#replace yourkey with your consumer key
-  consumer_secret = "yoursecret"),  #replace yoursecret with your consumer secret
+  app = "naturaldisasterspatialclustering",  					#replace yourapp with your app name
+  consumer_key = "",  		#replace yourkey with your consumer key
+  consumer_secret = "")  #replace yoursecret with your consumer secret
 #=======
 # reference for search_tweets function: 
 # https://rtweet.info/reference/search_tweets.html 
@@ -56,31 +56,32 @@ twitter_token <- create_token(
 # this should launch a web browser and ask you to log in to twitter
 # for authentication of access_token and access_secret
 twitter_token = create_token(
-  app = "",                     #enter your app name in quotes
+  app = "naturaldisasterspatialclustering",                     #enter your app name in quotes
   consumer_key = "",  		      #enter your consumer key in quotes
   consumer_secret = "",         #enter your consumer secret in quotes
->>>>>>> upstream/main
+#>>>>>>> upstream/main
   access_token = NULL,
   access_secret = NULL
 )
 
-<<<<<<< HEAD
-#get tweets for hurricane Dorian, searched on September 11, 2019
-dorian <- search_tweets("dorian OR hurricane OR sharpiegate", n=200000, include_rts=FALSE, token=twitter_token, geocode="32,-78,1000mi", retryonratelimit=TRUE)
+#<<<<<<< HEAD
+#get tweets for tornado, searched on 5/4/21
+tweets <- search_tweets("tornado OR tornado warning OR debris", n=200000, include_rts=FALSE, token=twitter_token, geocode="32,-87,500mi", retryonratelimit=TRUE)
 
+write.table(tweets$status_id,
+            here("data","derived","public","tweetids.txt"), 
+            append=FALSE, quote=FALSE, row.names = FALSE, col.names = FALSE)
 
-#get tweets without any text filter for the same geographic region in November, searched on November 19, 2019
+#get tweets without any text filter for the same geographic region in late Apr/early May, searched on 5/4/21
 #the query searches for all verified or unverified tweets, so essentially everything
-november <- search_tweets("-filter:verified OR filter:verified", n=200000, include_rts=FALSE, token=twitter_token, geocode="32,-78,1000mi", retryonratelimit=TRUE)
+tweetsTotal <- search_tweets("-filter:verified OR filter:verified", n=200000, include_rts=FALSE, token=twitter_token, geocode="32,-87,500mi", retryonratelimit=TRUE)
+
+write.table(tweetsTotal$status_id,
+            here("data","derived","public","tweetsTotalids.txt"), 
+            append=FALSE, quote=FALSE, row.names = FALSE, col.names = FALSE)
 
 
-############# LOAD THESE RESULTS - GEOG323 STUDENTS ONLY ############# 
-
-# Please download the file from here: https://github.com/GIS4DEV/literature/raw/master/dorian/dorian.RData
-# into the data\derived\private folder
-# then run the following line of code to load the data into your environment
-
-load(here("data","derived","private","dorian.RData"))
+#load(here("data","derived","private","dorian.RData"))
 
 # In the following code, you can practice running the queries on dorian3
 
@@ -94,68 +95,9 @@ load("tidyverse")
 
 
 # list unique/distinct place types to check if you got them all
-unique(dorian$place_type)
-=======
-# get tweets for hurricane Dorian, searched on September 11, 2019
-# this code will no longer work! It is here for reference.
-dorian = search_tweets("dorian OR hurricane OR sharpiegate",
-                       n=200000, include_rts=FALSE,
-                       token=twitter_token, 
-                       geocode="32,-78,1000mi",
-                       retryonratelimit=TRUE) 
+unique(tweets$place_type) #city, admin, poi, neighborhood, NA
+#=======
 
-# write results of the original twitter search
-write.table(dorian_raw$status_id,
-            here("data","raw","public","dorianids.txt"), 
-            append=FALSE, quote=FALSE, row.names = FALSE, col.names = FALSE)
-
-# get tweets without any text filter for the same geographic region in November, 
-# searched on November 19, 2019
-# this code will no longer work! It is here for reference.
-# the query searches for all verified or unverified tweets, i.e. everything
-november = search_tweets("-filter:verified OR filter:verified", 
-                         n=200000, include_rts=FALSE, 
-                         token=twitter_token,
-                         geocode="32,-78,1000mi", 
-                         retryonratelimit=TRUE)
-
-############# LOAD SEARCH TWEET RESULTS  ############# 
-
-### REVAMP THESE INSTRUCTIONS
-
-# load tweet status id's for Hurricane Dorian search results
-dorianids = 
-  data.frame(read.table(here("data","raw","public","dorianids.txt"), 
-                        numerals = 'no.loss'))
-
-# load cleaned status id's for November general twitter search
-novemberids =
-  data.frame(read.table(here("data","derived","public","novemberids.txt"),
-                        numerals = 'no.loss'))
-
-# rehydrate dorian tweets
-dorian_raw = rehydratoR(twitter_token$app$key, twitter_token$app$secret, 
-                twitter_token$credentials$oauth_token, 
-                twitter_token$credentials$oauth_secret, dorianids, 
-                base_path = NULL, group_start = 1)
-
-# alternatively, geog 323 students may load original dorian tweets
-# download dorian_raw.RDS from 
-# https://github.com/GIS4DEV/geog323data/raw/main/dorian/dorian_raw.RDS
-# and save to the data/raw/private folder
-dorian_raw = readRDS(here("data","raw","private","dorian_raw.RDS"))
-
-# rehydrate november tweets
-november = rehydratoR(twitter_token$app$key, twitter_token$app$secret, 
-                        twitter_token$credentials$oauth_token, 
-                        twitter_token$credentials$oauth_secret, novemberids, 
-                        base_path = NULL, group_start = 1)
-
-# alternatively, geog 323 students may load 13228 cleaned november tweets
-# download november.RDS from 
-# https://github.com/GIS4DEV/geog323data/raw/main/dorian/november.RDS
-# and save to the data/derived/private folder
-november = readRDS(here("data","derived","private","november.RDS"))
 
 ############# FILTER DORIAN FOR CREATING PRECISE GEOMETRIES ############# 
 
@@ -163,49 +105,65 @@ november = readRDS(here("data","derived","private","november.RDS"))
 # adds a lat and long field to the data frame, picked out of the fields
 # that you indicate in the c() list
 # sample function: lat_lng(x, coords = c("coords_coords", "bbox_coords"))
->>>>>>> upstream/main
+#>>>>>>> upstream/main
 
 # list and count unique place types
 # NA results included based on profile locations, not geotagging / geocoding.
 # If you have these, it indicates that you exhausted the more precise tweets 
 # in your search parameters and are including locations based on user profiles
-count(dorian_raw, place_type)
+count(tweets, place_type)
+
+#  <chr>        <int>
+#1 admin          464
+#2 city           319
+#3 neighborhood     1
+#4 poi              7
+#5 NA            7700
+
 
 # convert GPS coordinates into lat and lng columns
 # do not use geo_coords! Lat/Lng will be inverted
-dorian = lat_lng(dorian_raw, coords=c("coords_coords"))
-november = lat_lng(november, coords=c("coords_coords"))
+tweets = lat_lng(tweets, coords=c("coords_coords"))
+tweetsTotal = lat_lng(tweetsTotal, coords=c("coords_coords"))
 
 # select any tweets with lat and lng columns (from GPS) or 
 # designated place types of your choosing
-dorian = subset(dorian, 
+tweets = subset(tweets, 
                 place_type == 'city'| place_type == 'neighborhood'| 
                   place_type == 'poi' | !is.na(lat))
-
-november = subset(november,
+#752
+tweetsTotal = subset(tweetsTotal,
                   place_type == 'city'| place_type == 'neighborhood'| 
                     place_type == 'poi' | !is.na(lat))
+#8914
 
 # convert bounding boxes into centroids for lat and lng columns
-dorian = lat_lng(dorian,coords=c("bbox_coords"))
-november = lat_lng(november,coords=c("bbox_coords"))
+tweets = lat_lng(tweets,coords=c("bbox_coords"))
+tweetsTotal = lat_lng(tweetsTotal,coords=c("bbox_coords"))
 
 # re-check counts of place types
-count(dorian, place_type)
+count(tweets, place_type)
+
+#place_type       n
+#<chr>        <int>
+#  1 admin          425
+#2 city           319
+#3 neighborhood     1
+#4 poi              7
 
 ############# SAVE FILTERED TWEET IDS TO DATA/DERIVED/PUBLIC ############# 
 
-write.table(november$status_id,
-            here("data","derived","public","novemberids.txt"), 
+write.table(tweetsTotal$status_id,
+            here("data","derived","public","tweettotalfiltids.txt"), 
             append=FALSE, quote=FALSE, row.names = FALSE, col.names = FALSE)
 
-write.table(dorian$status_id,
-            here("data","derived","public","dorianids.txt"), 
+write.table(tweets$status_id,
+            here("data","derived","public","tweetfiltids.txt"), 
             append=FALSE, quote=FALSE, row.names = FALSE, col.names = FALSE)
 
 ############# SAVE TWEETs TO DATA/DERIVED/PRIVATE ############# 
 
-saveRDS(dorian, here("data","derived","private","dorian.RDS"))
-saveRDS(november, here("data","derived","private","november.RDS"))
+saveRDS(tweets, here("data","derived","private","tweets.RDS"))
+saveRDS(tweetsTotal, here("data","derived","private","tweetsTotal.RDS"))
 
 
