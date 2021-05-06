@@ -95,7 +95,7 @@ load("tidyverse")
 
 # list unique/distinct place types to check if you got them all
 unique(dorian$place_type)
-=======
+#=======
 # get tweets for hurricane Dorian, searched on September 11, 2019
 # this code will no longer work! It is here for reference.
 dorian = search_tweets("dorian OR hurricane OR sharpiegate",
@@ -163,13 +163,19 @@ november = readRDS(here("data","derived","private","november.RDS"))
 # adds a lat and long field to the data frame, picked out of the fields
 # that you indicate in the c() list
 # sample function: lat_lng(x, coords = c("coords_coords", "bbox_coords"))
->>>>>>> upstream/main
+#>>>>>>> upstream/main
 
 # list and count unique place types
 # NA results included based on profile locations, not geotagging / geocoding.
 # If you have these, it indicates that you exhausted the more precise tweets 
 # in your search parameters and are including locations based on user profiles
 count(dorian_raw, place_type)
+#1 admin          2893
+#2 city          10462
+#3 country         346
+#4 neighborhood     43
+#5 poi             441
+#6 NA           195202
 
 # convert GPS coordinates into lat and lng columns
 # do not use geo_coords! Lat/Lng will be inverted

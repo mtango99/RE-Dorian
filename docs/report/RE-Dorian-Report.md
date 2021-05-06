@@ -12,24 +12,24 @@ and
 First replication study by Holler, J. 2021 (in preparation). Hurricane Dorian vs Sharpie Pen: an empirical test of social amplification of risk on social media.
 
 Replication Author:
-Your Name
+Maddie Tango
 
 Replication Materials Available at: [github repository name](github repository link)
 
-Created: `DD Month YYYY`
+Created: `05 May 2020`
 Revised: `DD Month YYYY`
 
 ## Abstract 
 
 Why study the spatial distribution of Twitter data?
 
-Wang et al (2016) analyzed Twitter data for wildfires in California, finding that the social media data ...
+Wang et al (2016) analyzed Twitter data for wildfires in California, finding that the social media data ... **INSERT HERE**
 
 Holler (2021) is studying Twitter data for Hurricane Dorian on the Atlantic coast, finding that in spite of tending news and social media content regarding a false narrative of risk, original Tweets still clustered significantly along the real hurricane track, and only along the hurricane track.
 
 Reproducing and replicating spatial research of .....  continues to be relevant because .... 
 
-In his replication study, I will ... 
+In this replication study, I will ... **STUDY... TORNADO?**
 
 
 
@@ -48,7 +48,7 @@ The replication study by Holler (2021) used R, including the rtweet, rehydratoR,
 
 Outline the data to be used in your replication study, including:
 
-- twitter search parameters
+- twitter search parameters: tornado, tornado warning, debris
 - attach / link to files containing status_id's for the search results
 - any data used to normalize the tweets
 - methods for analysis / synthesis

@@ -30,13 +30,13 @@ library(here)
 
 #create temporal data frame & graph it
 
-<<<<<<< HEAD
+#<<<<<<< HEAD
 dorianByHour <- ts_data(dorian3, by="hours")
 ts_plot(dorian3, by="hours")
-=======
+#=======
 dorianTweetsByHour <- ts_data(dorian, by="hours")
 ts_plot(dorian, by="hours")
->>>>>>> upstream/main
+#>>>>>>> upstream/main
 
 
 ############# NETWORK ANALYSIS ############# 
@@ -66,7 +66,7 @@ dorianText = dorian %>% select(text) %>% plain_tweets()
 dorianWords = dorianText %>% unnest_tokens(word, text)
 
 # how many words do you have including the stop words?
-count(dorianWords)
+count(dorianWords) #256769
 
 # create list of stop words (useless words not worth analyzing) 
 data("stop_words")
@@ -83,7 +83,7 @@ stop_words = stop_words %>%
 dorianWords =  dorianWords %>% anti_join(stop_words) 
 
 # how many words after removing the stop words?
-count(dorianWords)
+count(dorianWords) #115249
 
 # graph frequencies of words
 dorianWords %>%
@@ -128,7 +128,7 @@ counties <- get_estimates("county",
                           product="population",
                           output="wide",
                           geometry=TRUE, keep_geo_vars=TRUE, 
-                          key="yourkey")
+                          key="")
  
 # select only the states you want, with FIPS state codes
 # look up fips codes here:
@@ -180,7 +180,7 @@ con <- dbConnect(RPostgres::Postgres(),
                  password='password') 
 >>>>>>> upstream/main
 =======
-con <- dbConnect(RPostgres::Postgres(), dbname='dsm', host='artemis', user='maddie', password='mtango99') 
+con <- dbConnect(RPostgres::Postgres(), dbname='dsm', host='artemis', user='maddie', password='') 
 >>>>>>> parent of 7c317ba (Update 02-analyze-dorian.r):procedure/code/02-analyze-dorian.r
 
 #list the database tables, to check if the database is working

@@ -83,7 +83,7 @@ stop_words = stop_words %>%
 tweetsWords =  tweetsWords %>% anti_join(stop_words) 
 
 # how many words after removing the stop words?
-count(tweetsWords)
+count(tweetsWords)#8145
 
 # graph frequencies of words
 tweetsWords %>%
@@ -108,7 +108,7 @@ tweetsWordPairs = tweetsText %>%
 # graph a word cloud with space indicating association.
 # you may change the filter to filter more or less than pairs with 30 instances
 tweetsWordPairs %>%
-  filter(n >= 25 & !is.na(word1) & !is.na(word2)) %>%
+  filter(n >= 6 & !is.na(word1) & !is.na(word2)) %>%
   graph_from_data_frame() %>%
   ggraph(layout = "fr") +
   geom_edge_link(aes(edge_alpha = n, edge_width = n)) +
@@ -128,22 +128,22 @@ counties <- get_estimates("county",
                           product="population",
                           output="wide",
                           geometry=TRUE, keep_geo_vars=TRUE, 
-                          key="yourkey")
+                          key="")
  
 # select only the states you want, with FIPS state codes
 # look up fips codes here:
 # https://en.wikipedia.org/wiki/Federal_Information_Processing_Standard_state_code 
 counties = filter(counties,
-                  STATEFP %in% c('54', '51', '50', '47', '45', '44', '42', '39',
-                                 '37','36', '34', '33', '29', '28', '25', '24',
-                                 '23', '22', '21', '18', '17','13', '12', '11',
-                                 '10', '09', '05', '01') )
+                  STATEFP %in% c('54', '51', '47', '45', '42', '39',
+                                 '37', '34', '29', '28', '24',
+                                 '22', '21', '18', '17','13', '12', '11',
+                                  '05', '01', '48', '40', '20') )
 
 # save counties to Derived/Public folder
-saveRDS(counties, here("data","derived","public","counties.RDS"))
+saveRDS(counties, here("data","derived","public","countiesAL.RDS"))
 
 # optionally, load counties from derived/public/counties.RDS
-counties = readRDS(here("data","derived","public","counties.RDS"))
+countiesAL = readRDS(here("data","derived","public","countiesAL.RDS"))
 
 # map results with GGPlot
 # note: cut_interval is an equal interval classification function, while 
@@ -180,7 +180,7 @@ con <- dbConnect(RPostgres::Postgres(),
                  password='password') 
 #>>>>>>> upstream/main
 #=======
-con <- dbConnect(RPostgres::Postgres(), dbname='dsm', host='artemis', user='maddie', password='mtango99') 
+con <- dbConnect(RPostgres::Postgres(), dbname='dsm', host='artemis', user='maddie', password='') 
 #>>>>>>> parent of 7c317ba (Update 02-analyze-dorian.r):procedure/code/02-analyze-dorian.r
 
 #list the database tables, to check if the database is working
@@ -251,7 +251,9 @@ dbWriteTable(con,'counties',lownames(counties), overwrite=TRUE)
 
 # pull results back from the database, replacing 'tablename' with the name
 # of table with results at county level
-county_tweets = dbReadTable(con, "tablename")
+county_tweets = dbReadTable(con, "tweets")
+county_tweets = dbReadTable(con, "tweetsTotal")
+
 
 # save county-level results to derived/public
 saveRDS(county_tweets, here("data","derived","public","county_tweets.RDS"))
