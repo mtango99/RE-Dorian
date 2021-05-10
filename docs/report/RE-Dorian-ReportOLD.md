@@ -46,6 +46,10 @@ The replication study by Holler (2021) used R, including the rtweet, rehydratoR,
 
 ## Materials and Procedure
 
+I used the code provided by Holler (2021) and changed the Twitter search parameters to the words "tornado," "tornado warning," and "debris" within 500 mi/km??? from ()coordinates. 
+__ results came up out of a total dataset for that area. 
+Downloaded on May 5, 2021. 
+
 Outline the data to be used in your replication study, including:
 
 - twitter search parameters: tornado, tornado warning, debris
@@ -68,7 +72,7 @@ Summarize changes and uncertainties between
 
 ## Discussion
 
-Provide a summary and interpretation of your key findings in relation to your research question. Mention if findings confirm or contradict patterns observed by Wang et al (2016) or by Holler (2
+Provide a summary and interpretation of your key findings in relation to your research question. Mention if findings confirm or contradict patterns observed by Wang et al (2016) or by Holler (2021)
 
 ## Conclusion
 

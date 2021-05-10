@@ -40,24 +40,24 @@ rm(tweets_by_county)
 
 # Repeat the workflow above for tweets in tweetsTotal
 
-nov_by_county = tweetsTotal %>% 
+tot_by_county = tweetsTotal %>% 
   st_as_sf(coords = c("lng","lat"), crs=4326) %>%
   st_transform(4269) %>%
   st_join(select(counties,GEOID)) %>%
   st_drop_geometry() %>%
   group_by(GEOID) %>% 
-  summarise(nov = n())
+  summarise(tot = n())
 
 counties = counties %>%
-  left_join(nov_by_county, by="GEOID") %>%
-  mutate(nov = replace_na(nov,0))
+  left_join(tot_by_county, by="GEOID") %>%
+  mutate(tot = replace_na(tot,0))
 
 counties = counties %>%
   mutate(dorrate = tweets / POP * 10000) %>%  # dorrate is tweets per 10,000
-  mutate(ntdi = (tweets - nov) / (tweets + nov)) %>%  # normalized tweet diff
-  mutate(ntdi = replace_na(ntdi,0))   # replace NULLs with 0's
+  mutate(ndti = (tweets - tot) / (tweets + tot)) %>%  # normalized tweet diff
+  mutate(ndti = replace_na(ndti,0))   # replace NULLs with 0's
 
-rm(nov_by_county)
+rm(tot_by_county)
 
 # save counties geographic data with derived tweet rates
 saveRDS(counties,here("data","derived","public","counties_tweet_counts.RDS"))
